@@ -136,7 +136,7 @@ namespace RethinkDb.Driver.ReGrid
         private async Task<ArraySegment<byte>> GetCurrentChunkAsync(CancellationToken cancelToken)
         {
             var batchIndex = (int)((length - batchPosition) / chunkSizeBytes);
-            if( batchIndex == batchSize ) // batch size, default 16 * 1024 * 1024 / ChunkSize
+            if( batchIndex == batchSize / chunkSizeBytes) // batch size, default 16 * 1024 * 1024 / ChunkSize
             {
                 await WriteBatchAsync(cancelToken).ConfigureAwait(false);
                 batch.Clear();
